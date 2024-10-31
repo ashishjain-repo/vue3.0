@@ -35,3 +35,18 @@ Create a `index.html` file and the script tag from the vuejs.org for CDN place i
 ```
 
 # Create Vue application using NPM
+To create an application using npm use this command `npm create vue@latest project-name`. After adding additional libraries or not get into that project and use `npm install` and then `npm run dev` to run the app.
+
+# App starting Points
+`App.vue` is the starting point of the application. We use `<template></template>` tags to pass the html content inside in which we can use the variables and Vue direcives in the tags. First we have to open a `<script>` tag at the top of the file and in the always to `export default` then inside use function data which will return objects. For the templateing in between template tags use `{{}}` and the directives that you can use goes in the tag attributes section something like this: `<p v-if="variable"></p>`. All the directives in vue start with `v-`.
+
+# Example of if_else-if_else ladder directives
+Assume that the variable that is coming from the data return is called status.
+```
+<p v-if="status === 'active'">User is Active</p>
+<p v-else-if="status === 'pending'">User is Pending</p>
+<p v-else>User is In-Active</p>
+
+```
+
+# Example of for loop directives
