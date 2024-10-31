@@ -50,3 +50,11 @@ Assume that the variable that is coming from the data return is called status.
 ```
 
 # Example of for loop directives
+Assume that the variable that is comming from data return is called tasks which is an object
+```
+<h3>Tasks: </h3>
+<ul>
+    <li v-for="task in tasks" :key="task.id">{{ task.name }}</li>
+</ul>
+```
+In this the key represent the unique identifier for each value.
