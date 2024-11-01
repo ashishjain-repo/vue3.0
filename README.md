@@ -227,3 +227,21 @@ Here addTask is a function that will run upon submission, and in the v-model we 
 - OnActivated = called when a kept-alive component is activated
 - onDeactivated = called when a kept-alive component is deactivated
 - onErrorCaptured = called when an error is caputers from a child component
+
+## onMounted()
+To use onMounted you have to import same as ref from vue `import {onMounted} from 'vue'`. We can use this async function or functions inside the onMounted function. Here is the example of fetching an api using it: -
+```
+onMounted(async () => 
+{
+  try
+  {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const data = await response.json();
+    tasks.value = data.map((task) => task.title);
+  }
+  catch(error)
+  {
+    console.log("Error Fetching Tasks");
+  }
+});
+```
