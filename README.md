@@ -206,3 +206,14 @@ const toggleStatus = () => {
 
 </script>
 ```
+
+## Forms and v-model
+In the forms we can bind them with a function using, and v-model is bind to an input to reterive the data upon submission. Lets submit a for that will take an input and will add the some array. We will also use the v-on or @ to use the event submit and also will be using prevent on it to prevent the regular behaviour of the form.
+```
+<form @submit.prevent="addTask">
+    <label for="newTask">Add Task</label>
+    <input type="text" id="newTask" name="newTask" v-model="newTask">
+    <button type="submit">Submit</button>
+  </form>
+```
+Here addTask is a function that will run upon submission, and in the v-model we binded the input value to a default value which could be any string or an empty string, for which we have used the variable named newTask in the script.

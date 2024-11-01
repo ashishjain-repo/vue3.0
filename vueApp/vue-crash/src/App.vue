@@ -6,6 +6,7 @@ const name = ref('John Doe');
 const status = ref('Active');
 const tasks = ref(['Task One', 'Task Two', 'Task Three']);
 const link = ref("https://google.com");
+const newTask = ref('');
 
 const toggleStatus = () => {
   if (status.value === 'active') {
@@ -19,6 +20,14 @@ const toggleStatus = () => {
   };
 };
 
+const addTask = () => 
+{
+  if(newTask.value.trim() !== '')
+{
+  tasks.value.push(newTask.value);
+  newTask.value = '';
+};
+};
 
 </script>
 
@@ -27,6 +36,12 @@ const toggleStatus = () => {
   <p v-if="status === 'active'">User is Active</p>
   <p v-else-if="status === 'pending'">User is Pending</p>
   <p v-else>User is In-Active</p>
+
+  <form @submit.prevent="addTask">
+    <label for="newTask">Add Task</label>
+    <input type="text" id="newTask" name="newTask" v-model="newTask">
+    <button type="submit">Submit</button>
+  </form>
 
   <h3>Tasks: </h3>
   <ul>
