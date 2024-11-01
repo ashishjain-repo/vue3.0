@@ -40,7 +40,10 @@ To create an application using npm use this command `npm create vue@latest proje
 # App starting Points
 `App.vue` is the starting point of the application. We use `<template></template>` tags to pass the html content inside in which we can use the variables and Vue direcives in the tags. First we have to open a `<script>` tag at the top of the file and in the always to `export default` then inside use function data which will return objects. For the templateing in between template tags use `{{}}` and the directives that you can use goes in the tag attributes section something like this: `<p v-if="variable"></p>`. All the directives in vue start with `v-`.
 
-# Example of if_else-if_else ladder directives
+# Option API
+Options API is the way where we can generate dynamic content using the data and returning the object and methods after data to create functions.
+
+## Example of if_else-if_else ladder directives
 Assume that the variable that is coming from the data return is called status.
 ```
 <p v-if="status === 'active'">User is Active</p>
@@ -49,7 +52,7 @@ Assume that the variable that is coming from the data return is called status.
 
 ```
 
-# Example of for loop directives
+## Example of for loop directives
 Assume that the variable that is comming from data return is called tasks which is an object
 ```
 <h3>Tasks: </h3>
@@ -59,7 +62,7 @@ Assume that the variable that is comming from data return is called tasks which 
 ```
 In this the key represent the unique identifier for each value.
 
-# Example of bind directive
+## Example of bind directive
 This directive help you to bind some data to an attribute. Lets assume we have a variable that contains the link to some external website.
 ```
 <a v-bind:href="link">Click Me</a>
@@ -71,9 +74,107 @@ We can also leave it the following way
 ```
 This will work perfectly, without the v-bind, we just have to make sure to add the colon before the attribute which tells the complier that we will be using the dynamic value.
 
-# Example of on event directive
+## Example of on event directive
 This directive is use to put events on the elements, for example: we can put an event on a button to toggle something. There are two methds to achieve this.
 ```
 <button v-on:click="toggleSomething">Toggle</button>
 <button @click="toggleSomething">Toggle</button>
+```
+
+# Composition API
+## Setup
+In Composition API we have to wrap our content like variables and methods inside of it. And to make it reactive in our html tags, we have to wrap the content inside the variables into ref for which we can import ref like this: `import {ref} from 'vue';`. Then when you declare variable you can wrap the value inside the ref method. When we are using reactive content, intead of using this keyword to refer to the varibale, we have have to use `variable.value` to get the value of the variable.
+
+# Composition API vs Option API
+- Composition API
+```
+<script>
+  import { ref } from 'vue';
+export default{
+  setup()
+  {
+    const name = ref('John Doe');
+    const status = ref('Active');
+    const tasks = ref(['Task One', 'Task Two', 'Task Three']);
+    const link = ref("https://google.com");
+
+    const toggleStatus = () => 
+    {
+      if (status.value === 'active') {
+        status.value = 'pending';
+      }
+      else if (status.value === 'pending') {
+        status.value = 'inactive'
+      }
+      else {
+        status.value = 'active'
+      };
+    };
+    return {name, status, tasks, link, toggleStatus,}
+  }
+}
+  
+</script>
+
+<template>
+  <h1>{{ name }}</h1>
+  <p v-if="status === 'active'">User is Active</p>
+  <p v-else-if="status === 'pending'">User is Pending</p>
+  <p v-else>User is In-Active</p>
+
+  <h3>Tasks: </h3>
+  <ul>
+    <li v-for="task in tasks" :key="task">{{ task }}</li>
+    <a v-bind:href="link">Click Link</a>
+    <a :href="link">Click Link</a>
+  </ul>
+
+  <button v-on:click="toggleStatus">Change Status</button>
+  <button @click="toggleStatus">Change Status</button>
+</template>
+```
+- Option API
+```
+<script>
+export default {
+  data() {
+    return {
+      name: 'John Doe',
+      status: 'pending',
+      tasks: ['Task One', 'Task Two', 'Task Three'],
+      link: "https://google.com",
+    };
+  },
+  methods: {
+    toggleStatus() {
+      if (this.status === 'active') {
+        this.status = 'pending';
+      }
+      else if (this.status === 'pending') {
+        this.status = 'inactive'
+      }
+      else {
+        this.status = 'active'
+      }
+    },
+  }
+};
+</script>
+
+<template>
+  <h1>{{ name }}</h1>
+  <p v-if="status === 'active'">User is Active</p>
+  <p v-else-if="status === 'pending'">User is Pending</p>
+  <p v-else>User is In-Active</p>
+
+  <h3>Tasks: </h3>
+  <ul>
+    <li v-for="task in tasks" :key="task">{{ task }}</li>
+    <a v-bind:href="link">Click Link</a>
+    <a :href="link">Click Link</a>
+  </ul>
+
+  <button v-on:click="toggleStatus">Change Status</button>
+  <button @click="toggleStatus">Change Status</button>
+</template>
 ```
