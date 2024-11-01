@@ -217,3 +217,13 @@ In the forms we can bind them with a function using, and v-model is bind to an i
   </form>
 ```
 Here addTask is a function that will run upon submission, and in the v-model we binded the input value to a default value which could be any string or an empty string, for which we have used the variable named newTask in the script.
+
+# Lifecycle Methods
+- onBeforeMount = called before mounting begins
+- onMounted = called when component is mounted
+- onBeforeUpdate = called when reactive data changes and before re-render
+- onUpdated = called after re-render
+- onBeforeUnmount = called before the Vue instance is destroyed
+- OnActivated = called when a kept-alive component is activated
+- onDeactivated = called when a kept-alive component is deactivated
+- onErrorCaptured = called when an error is caputers from a child component
