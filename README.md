@@ -178,3 +178,31 @@ export default {
   <button @click="toggleStatus">Change Status</button>
 </template>
 ```
+
+# Composition API - Short Way
+We can remove the setip function and put setup in the script tag and we can also remove the export default from the script. We are also not required to return anything since we do not have an explicit setup. The code will look something like this and still will be functional and more readable: -
+```
+<script setup>
+
+import { ref } from 'vue';
+
+const name = ref('John Doe');
+const status = ref('Active');
+const tasks = ref(['Task One', 'Task Two', 'Task Three']);
+const link = ref("https://google.com");
+
+const toggleStatus = () => {
+  if (status.value === 'active') {
+    status.value = 'pending';
+  }
+  else if (status.value === 'pending') {
+    status.value = 'inactive'
+  }
+  else {
+    status.value = 'active'
+  };
+};
+
+
+</script>
+```
