@@ -58,3 +58,22 @@ Assume that the variable that is comming from data return is called tasks which 
 </ul>
 ```
 In this the key represent the unique identifier for each value.
+
+# Example of bind directive
+This directive help you to bind some data to an attribute. Lets assume we have a variable that contains the link to some external website.
+```
+<a v-bind:href="link">Click Me</a>
+```
+We have to put v-bind: and then the name of the attribute to bind that value to an attribute.
+We can also leave it the following way
+```
+<a :href="link">Click Me</a>
+```
+This will work perfectly, without the v-bind, we just have to make sure to add the colon before the attribute which tells the complier that we will be using the dynamic value.
+
+# Example of on event directive
+This directive is use to put events on the elements, for example: we can put an event on a button to toggle something. There are two methds to achieve this.
+```
+<button v-on:click="toggleSomething">Toggle</button>
+<button @click="toggleSomething">Toggle</button>
+```
