@@ -328,4 +328,53 @@ import Navbar from '@/components/Navbar.vue';
 We created a file `Hero.vue` in components and add the static tags and imported in the App.vue to serve on the main page.
 
 # Props - What are Props?
-Props are way to send information to components so they can do their job correctly. When you create a component, you can pass data to it using props.
+Props are way to send information to components so they can do their job correctly. When you create a component, you can pass data to it using props. To use props in vue we have to import props in the component which we will be using to pass the data or props in: `import {defineProps} from 'vue'`. We can use this function and we have to pass objects in the function, and then the name of the variable that we would like to use as an attribute and then we have to pass two key value pair inside of it, first what type which could be string, number or other types and then default for when there is no value passed for prop or prop is not used. We can use these multiple variable in a component and their own default behaviours. We use these props when using the component something like this: `<Component propTitle="Some Title" />` if the prop is not used, the default behaviour will show. Here is the example how we are using it in our application: -
+- Hero.vue
+```
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps(
+    {
+        title: {
+            type: String,
+            default: 'Become a Vue Dev',
+        },
+        subtitle:{
+            type:String,
+            default:'Find the Vue job that fits your skills and needs',
+        }
+    }
+)
+
+</script>
+
+<template>
+    <section class="bg-green-700 py-20 mb-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
+                    {{title}}
+                </h1>
+                <p class="my-4 text-xl text-white">
+                    {{ subtitle }}
+                </p>
+            </div>
+        </div>
+    </section>
+</template>
+```
+
+- App.vue
+```
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import Hero from '@/components/Hero.vue';
+</script>
+
+<template>
+  <Navbar />
+  <Hero title="Test Title" subtitle="Test Subtitle"/>
+</template>
+```
+
