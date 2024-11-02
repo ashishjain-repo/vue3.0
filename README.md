@@ -245,3 +245,32 @@ onMounted(async () =>
   }
 });
 ```
+
+# Using TailwindCSS with Vue.js
+We will be using Postcss autofixer for tailwindcss instead of CLI. This is the command to create the config file for it: `npm install -D tailwindcss@latest postcss@latest autoprefixer@latest`. After running this command we have to create tailwind.config.js and postcss.config.js, but instead we can use this command to do it for use: `npx tailwindcss init -p`. Now we will be configuring the `tailwind.config.js`, in this file in the content array we have to mention which will tailwind should watch for and from which directory. We are going to add the main entry point fist which is `index.html` and then the folder and file extensions that we want to watch `./src/**/*.{vue,js,ts,jsx,tsx}`. We can also made custom adjustment based on the project for this file, since we are doing a project I will be adding some fonts that I would like to use. All those changes will be made in the extend: object in tailwind.config.js. The file would look like this: -
+```
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['/.index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif']
+      },
+      gridTemplateColumns: {
+        '70/30': '70% 28%'
+      },
+    },
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+Last thing we have to do to config tailwindcss is to add these following three lines to our CSS file: -
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
