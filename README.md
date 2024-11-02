@@ -377,4 +377,70 @@ import Hero from '@/components/Hero.vue';
   <Hero title="Test Title" subtitle="Test Subtitle"/>
 </template>
 ```
+As of latest update one is not required to import defineProps but it is a good practice to import those functionallity.
 
+# Container Component
+Container component is a component in which we can wrap some other component, and we can use props on top of it to make it dynamic. We can create a component and pass the tag called slot where the other component will reside and the main Container is used as a wrapper for that child content or component.
+
+## HomeCards.vue & Card.vue
+Card.vue is used here as a Container component which have a div that contains some conent that share parent element which is similar, so we swapped that parent element with Card component, and to make the changes in the parent element we are using props based on the usecase. In this example we are using two blocks or cards who share same parent design but differnet background color, to change that background color we are using Props and we are using Card in the HomeCards to wrap it around some content. Here is the example: -
+
+- Card.vue
+```
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps
+(
+    {
+        bg:{
+            type: String,
+            default: 'bg-gray-100',
+        },
+    },
+);
+</script>
+
+<template>
+    <div v-bind:class="`${bg} p-6 rounded-lg shadow-md`">
+        <slot>
+        </slot>
+    </div>
+</template>
+```
+
+- HomeCards.vue
+```
+<script setup>
+import Card from '@/components/Card.vue';
+</script>
+
+<template>
+    <section class="py-4">
+        <div class="container-xl lg:container m-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg">
+                <Card>
+                    <h2 class="text-2xl font-bold">For Developers</h2>
+                    <p class="mt-2 mb-4">
+                        Browse our Vue jobs and start your career today
+                    </p>
+                    <a href="jobs.html" class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700">
+                        Browse Jobs
+                    </a>
+            </Card>
+                <Card bg="bg-green-100">
+                    <h2 class="text-2xl font-bold">For Employers</h2>
+                    <p class="mt-2 mb-4">
+                        List your job to find the perfect developer for the role
+                    </p>
+                    <a href="add-job.html"
+                        class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600">
+                        Add Job
+                    </a>
+                </Card>
+            </div>
+        </div>
+    </section>
+</template>
+```
+In this as we can see instead of passing the class in the quotation marks we uses backticks because when we are binding an attribute we are declaring a variable inside so instead we used backtick to pass the classes, and for the varibale we used `${}` inside the class.
