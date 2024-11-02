@@ -279,7 +279,7 @@ Last thing we have to do to config tailwindcss is to add these following three l
 Components are the individual parts that make up a view. A view can consist of multiple components working together to present information and allow user interactions.
 
 ## Navbar.vue
-We are creating `Navbar.vue` in the components folder because we will be using Navbar in multiple pages. When we are working inside the src folder we can use `import something from '@/assests/'` something like this to import from the src folder instead of using regular paths. So for this component we wrote the template and we imported logo from assets and bind it to the navbar src attribute. After than we simply imported in the App.vue, here is the code: -
+We are creating `Navbar.vue` in the components folder because we will be using Navbar in multiple pages. When we are working inside the src folder we can use `import something from '@/assests/'` something like this to import from the src folder instead of using regular paths. So for this component we wrote the template and we imported logo from assets and bind it to the navbar src attribute. After than we simply imported in the App.vue and we used the component with self-closing tag, here is the code: -
 - Navbar.vue
 ```
 <script setup>
@@ -324,3 +324,8 @@ import Navbar from '@/components/Navbar.vue';
 </template>
 ```
 
+## Hero.vue
+We created a file `Hero.vue` in components and add the static tags and imported in the App.vue to serve on the main page.
+
+# Props - What are Props?
+Props are way to send information to components so they can do their job correctly. When you create a component, you can pass data to it using props.
