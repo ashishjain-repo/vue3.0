@@ -380,7 +380,7 @@ import Hero from '@/components/Hero.vue';
 As of latest update one is not required to import defineProps but it is a good practice to import those functionallity.
 
 # Container Component
-Container component is a component in which we can wrap some other component, and we can use props on top of it to make it dynamic. We can create a component and pass the tag called slot where the other component will reside and the main Container is used as a wrapper for that child content or component.
+Container component is a component in which we can wrap some other component, and we can use props on top of it to make it dynamic. We can create a component and pass the tag called `<slot></slot>` where the other component will reside and the main Container is used as a wrapper for that child content or component.
 
 ## HomeCards.vue & Card.vue
 Card.vue is used here as a Container component which have a div that contains some conent that share parent element which is similar, so we swapped that parent element with Card component, and to make the changes in the parent element we are using props based on the usecase. In this example we are using two blocks or cards who share same parent design but differnet background color, to change that background color we are using Props and we are using Card in the HomeCards to wrap it around some content. Here is the example: -
