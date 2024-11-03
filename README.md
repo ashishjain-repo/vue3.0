@@ -446,7 +446,7 @@ import Card from '@/components/Card.vue';
 In this as we can see instead of passing the class in the quotation marks we uses backticks because when we are binding an attribute we are declaring a variable inside so instead we used backtick to pass the classes, and for the varibale we used `${}` inside the class.
 
 ## JobListings.vue & JobListing.vue
-On the homepage we are represeting job listing, to acheive that we have created JobListings component which will get the json data and create a for loop inside a div, and we also created a new component single job listing which will be placed in the div which contains for loop for the json object, and every iteration that component will be called and and we have passed props to get the job done, by defining the type of the prop as object. Here is the code: -
+On the homepage, we display job listings using a component called JobListings, which pulls job data from a JSON file. It loops through this data and creates a JobListing component for each job. The JobListings component passes job information to JobListing as props. In JobListing, we show details like the job type, title, description, salary, and location, along with a link to read more about each position. Here is the code: -
 
 - JobListings.vue
 ```
