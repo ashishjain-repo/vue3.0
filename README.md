@@ -641,3 +641,7 @@ const truncatedDescription = computed(() => {
     </div>
 </template>
 ```
+
+## PrimeIcons for adding icons in the Application
+To use prime icons we have to install in our application and then import primeicons.css into our main.js file. Here is the command: `npm install primeicons`, import file: `import 'primeicons/primeicons.css'`. Now we can use these icons in the `<i></i>` tags, by defining the classes, you can find more information on that here: [PrimeIcons](https://primevue.org/icons).
+
