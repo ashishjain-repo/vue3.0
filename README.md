@@ -518,3 +518,65 @@ defineProps
     </div>
 </template>
 ```
+
+## JobListings Limit & showButton Props
+We created a limit prop which is a number, and when used during declartion we can choose how many jobs are going to be shown. We created a button which will only shown when its props is true otherwise it wont show, for which we using v-if"condition". Here is the code: -
+
+- JobListings.vue
+```
+<script setup>
+import jobData from '@/jobs2.json';
+import JobListing from '@/components/JobListing.vue';
+
+import { ref, defineProps } from 'vue';
+
+const jobs = ref(jobData);
+
+defineProps
+    (
+        {
+            limit: Number,
+            showButton: {
+                type: Boolean,
+                default: false,
+            },
+        },
+    );
+
+</script>
+
+<template>
+    <section class="bg-blue-50 px-4 py-10">
+        <div class="container-xl lg:container m-auto">
+            <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
+                Browse Jobs
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <JobListing v-for="job in jobs.slice(0, limit || jobs.length)" :key="job.id" :job="job" />
+            </div>
+        </div>
+    </section>
+    <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
+        <a href="/jobs" class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700">View
+            All Jobs</a>
+    </section>
+
+</template>
+```
+
+- App.vue
+```
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import Hero from '@/components/Hero.vue';
+import HomeCards from '@/components/HomeCards.vue';
+import JobListings from '@/components/JobListings.vue';
+</script>
+
+<template>
+  <Navbar />
+  <Hero />
+  <HomeCards />
+  <JobListings :limit="3" :showButton="true"/>
+</template>
+```
