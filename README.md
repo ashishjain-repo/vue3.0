@@ -645,3 +645,80 @@ const truncatedDescription = computed(() => {
 ## PrimeIcons for adding icons in the Application
 To use prime icons we have to install in our application and then import primeicons.css into our main.js file. Here is the command: `npm install primeicons`, import file: `import 'primeicons/primeicons.css'`. Now we can use these icons in the `<i></i>` tags, by defining the classes, you can find more information on that here: [PrimeIcons](https://primevue.org/icons).
 
+# VUE Router
+We can install the route when we are creating a new application, but to add the route to an application which does not have router confiured using this command: `npm install vue-router`. Now we can go ahead and create a directory inside the `src` folder named `router`, this is the folder where we are gonna create a file to define router for our application. For this application we are creating a file named `index.js` inside the routes folder where we will be defining the routes for our application. We will be importing two required function from the `vue-router` library called `createRouter` and `createWebHistory`.
+
+# Views
+Since we installed Router now to serve the pages on those routes we need views. Views are just pages that containes multiple coponents, and do share some components as well. To create views we are going to start with creating a directory named `views` in `src`, where we are going to create views which we will later serve on those routes using router.
+
+## HomeView.vue
+Now we are creating a homevue where only component that are required for homepage will exist, so we are going to move components `Hero`, `HomeCards`, and `JobListings` to that homeview and leave only the navbar, because we require navbar to be on every page. This is the code: -
+- HomeView.vue
+```
+<script setup>
+import Hero from '@/components/Hero.vue';
+import HomeCards from '@/components/HomeCards.vue';
+import JobListings from '@/components/JobListings.vue';
+</script>
+
+<template>
+    <Hero />
+    <HomeCards />
+    <JobListings :limit="3" :showButton="true" />
+</template>
+```
+
+## Create '/' route for HomeView
+In the index.js inside the router folder we are also going to import the `HomeView` now. We are going to create a variable which will use the function `createRouter` which takes Object as an argument. We are going to set up history key and add the value of `createWebHistory` function and pass this `import.meta.env.BASE_URL`. We are creating this history so we can use this back and forward in our webpage and it still works as a page that is server rendered. We are also going to define routes key which is an array which takes object as the route, in which we will define: `path`, `name`, and `component`. Now to use this route we have to export default the variable that we created router on. Then we are going to import that in the `main.js` file. Now we are going to make changes and make a variable app and use createApp on that and add `app.use(router)` to add router to the app, and then we are going to mount the app as well. Now for that view to show we are going to import `RouterView` in the `App.vue`, and then we are going to use RouterView as a component after our navbar to show the homeview. Here is the code: -
+
+- router/index.js
+```
+import {createRouter, createWebHistory} from 'vue-router';
+
+import HomeView from '@/views/HomeView.vue';
+
+const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes:[
+        {
+            path:'/',
+            name: 'home',
+            component: HomeView
+        },
+    ],
+});
+
+export default router;
+```
+
+- src/main.js
+```
+import './assets/main.css';
+import 'primeicons/primeicons.css';
+
+import router from './router';
+
+import { createApp } from 'vue'
+import App from './App.vue'
+
+
+const app = createApp(App);
+
+app.use(router);
+
+app.mount('#app');
+
+```
+
+- App.vue
+```
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import { RouterView } from 'vue-router';
+</script>
+
+<template>
+  <Navbar />
+  <RouterView />
+</template>
+```
