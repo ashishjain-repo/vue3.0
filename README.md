@@ -767,3 +767,46 @@ export default router;
 Now we are going to replace `<a></a>` to RouterLink, because in vue app, to jump from one route to another we do not rely on anchor tags, instead we use RouterLink and perform functionallity on them. Normal anchor tags do full page reload, but not in RouterLink. URL management is done by Browser using Anchor but with RouterLinkit is managed by RouterLink. This also increased performance in page reaload because a page won't be reloading in SPA, but with anchor tags pages will be doing full reloads. When we are changing the anchor to RouterLink, we also have to change `href` attribute to `to`. So we have changed all the anchor tags to routerlink. Here how it should look like: `<RouterLink to='/route'></RouterLink>`.
 
 ## Navbar Active Link
+To make our links at the top highlight based on the page we are on we have to first get the path, to get that there is a function that is part of the vue-router called `useRoute`. Now we are going to create a function in navbar using that functions functionallity to receive route and highlight. After setting up that function and using the useRoute attribute called path we can get the path. Now we are going to change the classes based on that route, and to do that we are going to bind the classes. Here is the code:-
+
+- Navbar.vue
+```
+<script setup>
+import logo from '@/assets/img/logo.png'
+import { RouterLink, useRoute } from 'vue-router';
+
+const isActiveLink = (routePath) => {
+    const route = useRoute();
+    return route.path === routePath;
+};
+</script>
+
+<template>
+    <nav class="bg-green-700 border-b border-green-500">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+                <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
+                    <!-- Logo -->
+                    <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/">
+                        <img class="h-10 w-auto" v-bind:src="logo" alt="Vue Jobs" />
+                        <span class="hidden md:block text-white text-2xl font-bold ml-2">Vue Jobs</span>
+                    </RouterLink>
+                    <div class="md:ml-auto">
+                        <div class="flex space-x-2">
+                            <RouterLink to="/"
+                                v-bind:class="[isActiveLink('/') ? 'bg-green-900' : 'hover:bg-gray-900', 'hover:text-white', 'text-white', 'px-3', 'py-2', 'rounded-md']">
+                                Home</RouterLink>
+                            <RouterLink to="/jobs"
+                                v-bind:class="[isActiveLink('/jobs') ? 'bg-green-900' : 'hover:bg-gray-900', 'hover:text-white', 'text-white', 'px-3', 'py-2', 'rounded-md']">
+                                Jobs</RouterLink>
+                            <RouterLink to="/jobs-add"
+                                v-bind:class="[isActiveLink('/jobs-add') ? 'bg-green-900' : 'hover:bg-gray-900', 'hover:text-white', 'text-white', 'px-3', 'py-2', 'rounded-md']">
+                                Add Job</RouterLink>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</template>
+```
