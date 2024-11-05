@@ -722,3 +722,48 @@ import { RouterView } from 'vue-router';
   <RouterView />
 </template>
 ```
+
+## JobsView.vue
+Now we are creating `JobsView.vue` file which will contain all the jobs instead of having only 3 as it in HomeView page. This page will return all the jobs available and we are going to set up the router for this.
+
+- JobsView.vue
+```
+<script setup>
+import JobListings from '@/components/JobListings.vue';
+</script>
+
+<template>
+    <JobListings />
+</template>
+```
+
+- router/index.js
+```
+import {createRouter, createWebHistory} from 'vue-router';
+
+import HomeView from '@/views/HomeView.vue';
+import JobsView from '@/views/JobsView.vue';
+
+const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes:[
+        {
+            path:'/',
+            name: 'home',
+            component: HomeView
+        },
+        {
+            path:'/jobs',
+            name:'jobs',
+            component: JobsView
+        },
+    ],
+});
+
+export default router;
+```
+
+# RouterLink
+Now we are going to replace `<a></a>` to RouterLink, because in vue app, to jump from one route to another we do not rely on anchor tags, instead we use RouterLink and perform functionallity on them. Normal anchor tags do full page reload, but not in RouterLink. URL management is done by Browser using Anchor but with RouterLinkit is managed by RouterLink. This also increased performance in page reaload because a page won't be reloading in SPA, but with anchor tags pages will be doing full reloads. When we are changing the anchor to RouterLink, we also have to change `href` attribute to `to`. So we have changed all the anchor tags to routerlink. Here how it should look like: `<RouterLink to='/route'></RouterLink>`.
+
+## Navbar Active Link
