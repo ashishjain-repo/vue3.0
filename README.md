@@ -899,3 +899,47 @@ SO when user is navagating on our wesbsite and get to some page accidentally or 
     component: NotFound
 },
 ```
+## JobView.vue
+We create a JObView.vue file for the jobs that will be shown for speicific id and we have also configured the path in the RouterLink and for this we have added an id in the path so we can receive only request job: `path: '/jobs/:id'`. The id will be coming from the JobListing component.
+
+# Setup Json Sever
+We are going to setup a JSON Server although the data will be coming from the json file but it will work as a middleware to layout our json structure and will provide CRUD functionallity. TO setup this server we have install it in our dependencies with this command: `npm install json-server`. So now to read our JSON file we have to make changes in that file, and instead of it having an array that contains object, we have to wrap that array in object and give that array a key of jobs. We are also going to add a new script in our package.json file `"server": "json-server --watch src/jobs.json --port 5000"`. Please do not use this in production, this is to mock a rest api but does not take place of the REST API, this is only used for prototyping.
+
+## Using Axios to fetch the Mock API
+It is not required, but using this can reduce the lines of codes to perform a task. Here is the command: `npm install axios"`. Now we can import axios in our `JobListings.vue` file and remove the json because we will be using Axios to do that task, and we can also remove the variable from the jobs variabe but will add an empty array so it starts with array and later we can populate it. We are also going to import `onMounted` and pass the async arrow function to make the fetch request. Everything is the template is unchanged we just changed the data source, and the way we get the data. Here is the code: -
+
+- JobListings.vue
+```
+<script setup>
+import JobListing from '@/components/JobListing.vue';
+import { RouterLink } from 'vue-router';
+
+import { ref, defineProps, onMounted } from 'vue';
+
+import axios from 'axios';
+
+
+defineProps
+(
+    {
+        limit: Number,
+        showButton: {
+            type: Boolean,
+            default: false,
+        },
+    },
+);
+const jobs = ref([]);
+onMounted(async () => {
+    try{
+        const response = await axios.get('http://localhost:5000/jobs');
+        jobs.value = response.data;
+    }
+    catch(error)
+    {
+        console.error('Error fetching jobs', error);
+    }
+});
+
+</script>
+```
