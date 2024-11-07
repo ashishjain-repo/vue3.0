@@ -945,4 +945,71 @@ onMounted(async () => {
 ```
 
 # ref vs reactive
-We can use ref or reactive in our application but they both have their differences. `reactive()` only takes objects. It does not take primitives like strings, numbers, and booleans. It uses `ref()` under the hood. `ref()` can take objects or primitives, and ref has a .value propety for reassigning, but `reactive()` does not use `.value` and cannot be reassigned. So we are going to refactor JobListings from ref to reactive. The purpose of using reactive is to have an object that have all the fields like name, email, address inside of it. So to use reactive we use the variable and instead of passing a array for our data in JobListings we will pass in the object and set a key value pair of `jobs : []`. So after fetch the data will be stored in that array that holds the key or `jobs`.
+We can use ref or reactive in our application but they both have their differences. `reactive()` only takes objects. It does not take primitives like strings, numbers, and booleans. It uses `ref()` under the hood. `ref()` can take objects or primitives, and ref has a .value propety for reassigning, but `reactive()` does not use `.value` and cannot be reassigned. So we are going to refactor JobListings from ref to reactive. The purpose of using reactive is to have an object that have all the fields like name, email, address inside of it. So to use reactive we use the variable and instead of passing a array for our data in JobListings we will pass in the object and set a key value pair of `jobs : []`. So after fetch the data will be stored in that array that holds the key or `jobs`. Here is the updated code: -
+
+- JobListings.vue
+```
+<script setup>
+import JobListing from '@/components/JobListing.vue';
+import { RouterLink } from 'vue-router';
+
+import { reactive, defineProps, onMounted } from 'vue';
+
+import axios from 'axios';
+
+
+defineProps
+(
+    {
+        limit: Number,
+        showButton: {
+            type: Boolean,
+            default: false,
+        },
+    },
+);
+const state = reactive({
+    jobs:[],
+    isLoading: true
+});
+
+onMounted(async () => {
+    try{
+        const response = await axios.get('http://localhost:5000/jobs');
+        state.jobs = response.data;
+    }
+    catch(error)
+    {
+        console.error('Error fetching jobs', error);
+    }
+    finally{
+        state.isLoading = false;
+    }
+});
+
+</script>
+
+<template>
+    <section class="bg-blue-50 px-4 py-10">
+        <div class="container-xl lg:container m-auto">
+            <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
+                Browse Jobs
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <JobListing v-for="job in state.jobs.slice(0, limit || state.jobs.length)" :key="job.id" :job="job" />
+            </div>
+        </div>
+    </section>
+    <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
+        <RouterLink to="/jobs" class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700">View
+            All Jobs</RouterLink>
+    </section>
+
+</template>
+```
+We are not required to use this over ref and vice-versa but it is good to know how to approach both functionallity and where they can be useful.
+
+# VUE Spinner
+Vue spinner is the library in the vue modules and can be installed and used to create spinners while loading. Use this command to install it: `npm install vue-spinner`. We can import mutiple types of Vue Spinner from that librabry and we will be implementing it on the JobListings.vue before content is loaded.
+
+## Fetch single Job and Display Data
