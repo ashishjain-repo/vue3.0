@@ -943,3 +943,6 @@ onMounted(async () => {
 
 </script>
 ```
+
+# ref vs reactive
+We can use ref or reactive in our application but they both have their differences. `reactive()` only takes objects. It does not take primitives like strings, numbers, and booleans. It uses `ref()` under the hood. `ref()` can take objects or primitives, and ref has a .value propety for reassigning, but `reactive()` does not use `.value` and cannot be reassigned. So we are going to refactor JobListings from ref to reactive. The purpose of using reactive is to have an object that have all the fields like name, email, address inside of it. So to use reactive we use the variable and instead of passing a array for our data in JobListings we will pass in the object and set a key value pair of `jobs : []`. So after fetch the data will be stored in that array that holds the key or `jobs`.
