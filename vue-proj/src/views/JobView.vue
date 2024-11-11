@@ -1,5 +1,29 @@
 <script setup>
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import { reactive, onMounted } from 'vue';
+import { useRoute, RouterLink, useRouter } from 'vue-router';
+import axios from 'axios';
 
+const  route = useRouter();
+const jobId= route.params.id;
+
+const state = reactive({
+    job:{},
+    isLoading: true,
+});
+
+onMounted(async () => {
+    try{
+        const response = await axios.get("http://localhost:8000/jobs");
+        state.job = response.data;
+    }
+    catch(error){
+        console.error(error);
+    }
+    finally{
+        state.isLoading = false;
+    }
+})
 </script>
 
 <template>
@@ -22,9 +46,9 @@
                         </h3>
 
                         <p class="mb-4">
-                            We are seeking a talented Front-End Developer to join our team
-                            in Boston, MA. The ideal candidate will have strong skills in
-                            HTML, CSS, and JavaScript, with experience working with modern
+                            We are seeking a talented Front-End Developer to join our team in
+                            Boston, MA. The ideal candidate will have strong skills in HTML,
+                            CSS, and JavaScript, with experience working with modern
                             JavaScript frameworks such as Vue or Angular.
                         </p>
 
@@ -45,8 +69,8 @@
                         <p class="my-2">
                             NewTek Solutions is a leading technology company specializing in
                             web development and digital solutions. We pride ourselves on
-                            delivering high-quality products and services to our clients
-                            while fostering a collaborative and innovative work environment.
+                            delivering high-quality products and services to our clients while
+                            fostering a collaborative and innovative work environment.
                         </p>
 
                         <hr class="my-4" />

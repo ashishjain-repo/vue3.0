@@ -1013,3 +1013,4 @@ We are not required to use this over ref and vice-versa but it is good to know h
 Vue spinner is the library in the vue modules and can be installed and used to create spinners while loading. Use this command to install it: `npm install vue-spinner`. We can import mutiple types of Vue Spinner from that librabry and we will be implementing it on the JobListings.vue before content is loaded.
 
 ## Fetch single Job and Display Data
+To acheive and show data of the single job we are going to go on the `JobView.vue` page and import all the dependencies to configure the template based on the fetch result. And this is going to be where we will get result based on the sent id by the `HomeView.vue` or `JobViews.vue`. We are going to use `useRoute` to get the id passed by the browser, by creating a variable with that function and get the id by this `variable.params.id` we are using id specifically because we mentioned id in the route to get the value in our router.
