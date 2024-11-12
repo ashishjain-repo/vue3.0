@@ -1118,5 +1118,59 @@ onMounted(async () => {
         <PulseLoader />
     </div>
 </template>
-
 ```
+
+## BackButton.vue
+Now we are going to create a backbutton component to add our JobView view to take use bak to all jobs `/jobs`. Here is the code: -
+
+- BackButton.vue
+```
+<script setup>
+import { RouterLink } from 'vue-router';
+
+</script>
+
+<template>
+    <section>
+        <div class="container m-auto py-6 px-6">
+            <RouterLink to="/jobs" class="text-green-500 hover:text-green-600 flex items-center">
+                <i class="pi pi-arrow-circle-left mr-3"></i>Back to Job Listings
+            </RouterLink>
+        </div>
+    </section>
+</template>
+```
+
+# Proxying
+Since we are using a fake api or a json but calling it using fetch methods, and we have to mention the address where we are fetching that request from. Instead of putting HTTP and the whole address we can use proxying using the `vite.config.js` file. So intead of typing the whole address in multiple places in our api we can set that in that file something like this:-
+- vite.config.js
+```
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+  ],
+  server: {
+    port: 3000,
+    proxy: 
+    {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/,''),
+      },
+    }
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
+})
+```
+So what we have done is we have created a path `/api` which targets the entry point of the api. Then we can use this base entry point and then can pair up the with the other routes of the api for example: `/api/job/${jobId}`.
